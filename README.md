@@ -1,6 +1,6 @@
 # Grafana 安裝教學
-1.預先安裝
-請確認Bookroll、Mysql是否已經安裝
+**一.預先安裝
+請確認Bookroll、Mysql是否已經安裝**
 
 Age           | Time  | Food | Gold | Requirement
 --------------|:-----:|-----:| ----:|------------------------
