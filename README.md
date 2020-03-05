@@ -62,7 +62,9 @@ MySQL         | Bookroll資料庫    |
    ```    
     ![image](https://github.com/CH-KANG/Grafana/blob/master/Pic/auth.anony.png)
     
-* Step3.匯入Panel面板
+* Step3.連接資料庫
+    
+* Step4.匯入Panel面板
   * Analysis tool (Dashboard) 
   
     請下載或Clone
