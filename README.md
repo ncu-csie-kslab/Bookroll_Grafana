@@ -18,7 +18,9 @@ MySQL         | Bookroll資料庫    |
 
 * Python3
   * Ubuntu已有內建
-  * Windows可下載 (https://www.python.org/downloads/)
+  * Windows可下載  
+  
+  (https://www.python.org/downloads/)
   * 需求套件 : lti, oauthlib, flask
    ```python
    pip install lti
@@ -30,10 +32,10 @@ MySQL         | Bookroll資料庫    |
   
 * Grafana
   * 可選擇Linux, Windows, Mac, Docker等安裝方式與系統
-  * 請參考官方文件
+  * 請參考官方文件  
+  
     https://grafana.com/grafana/download?platform=linux
-
-https://github.com/CH-KANG/Grafana/blob/master/Pic/auth.anony.png
+    
 
 **四. Grafana配置**
 * Step1. 啟動Grafana
@@ -47,3 +49,4 @@ https://github.com/CH-KANG/Grafana/blob/master/Pic/auth.anony.png
 * Step2.用vim或其他編輯器開啟訪客模式(auth.anoymous)
   * These system settings are defined in or custom.ini
     以Linux為例，路徑為 /etc/grafana/grafana.ini
+    ![image](https://github.com/CH-KANG/Grafana/blob/master/Pic/auth.anony.png)
