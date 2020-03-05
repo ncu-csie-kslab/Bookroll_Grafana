@@ -42,10 +42,15 @@ MySQL         | Bookroll資料庫    |
   * 請參考官方文件  
   
     https://grafana.com/docs/grafana/latest/installation/debian/
-  * Linux為例
+  * 以Linux為例
    ```python
    sudo service grafana-server start
    ```
+  * 以Windows為例   
+   ```python
+   cd '\Program Files\GrafanaLabs\grafana\bin'
+   grafana-server.exe
+   ```  
 * Step2.用vim或其他編輯器開啟訪客模式(auth.anoymous)
   * These system settings are defined in or custom.ini
   
