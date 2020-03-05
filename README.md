@@ -122,3 +122,9 @@ MySQL         | Bookroll資料庫    |
        #請將註1* 的網址複製到 '.......&var-flask_test=' 取代內容
        #並將&var-flask_test=之後的字元都去除
    ```  
+
+   ```python
+   if __name__=="__main__":
+       app.debug = True
+       app.run(host="0.0.0.0", port=8090) #請記住port號碼 註2*
+   ```  
