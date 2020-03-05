@@ -120,7 +120,7 @@ MySQL         | Bookroll資料庫    |
     請修改以下部分
 
    ```python
-   key = '12345678-8137-2FF2-ABCD'  #請修改成自訂的密碼(16進位)，並符合長度 (客戶密鑰)
+   key = '12345678-8137-2FF2-ABCD'  #請修改成自訂的密碼(16進位)，並符合長度 (客戶密鑰) 註2*
    the_secret = 'sd54f65sd65f6sde'  #請修改成自訂的密碼，並符合長度 (共享的密鑰)
    ```  
 
@@ -135,7 +135,7 @@ MySQL         | Bookroll資料庫    |
    ```python
    if __name__=="__main__":
        app.debug = True
-       app.run(host="0.0.0.0", port=8090) #可更改port號碼 並請記住port號碼 註2*
+       app.run(host="0.0.0.0", port=8090) #可更改port號碼 並請記住port號碼 註3*
    ```  
 * 執行Python檔
   * 修改完成後請背景執行兩個檔案並且不中斷
@@ -145,7 +145,19 @@ MySQL         | Bookroll資料庫    |
    nohup python3 flask_provider_Analysis_tool.py 0<&- &> analysis_tool.log &
    nohup python3 flask_provider_grafana_weekly_report.py 0<&- &> grafana_weekly_report.log &
    ```     
-    
+
+![image]()
 **六. Moodle LTI連結**
 * 請利用admin帳號進入moodle，依照下列步驟註冊LTI
-*
+  * 點選網站管理
+  ![image](https://github.com/CH-KANG/Grafana/blob/master/Pic/lti01.png)
+
+  * 點選管理工具
+  ![image](https://github.com/CH-KANG/Grafana/blob/master/Pic/lti02.png)
+  
+  * 點選手動配置一個工具
+  ![image](https://github.com/CH-KANG/Grafana/blob/master/Pic/lti03.png)  
+  
+  * 輸入工具名稱 / 設定的python檔案網址(註3*) /  客戶密鑰, 共享的密鑰(註2*) / 預設啟動容器選擇 新視窗
+  ![image](https://github.com/CH-KANG/Grafana/blob/master/Pic/lti02.png)
+  
