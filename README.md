@@ -20,7 +20,7 @@ MySQL         | Bookroll資料庫    |
   * Ubuntu已有內建
   * Windows可下載  
   
-  (https://www.python.org/downloads/)
+    https://www.python.org/downloads/
   * 需求套件 : lti, oauthlib, flask
    ```python
    pip install lti
@@ -50,3 +50,6 @@ MySQL         | Bookroll資料庫    |
   * These system settings are defined in or custom.ini
     以Linux為例，路徑為 /etc/grafana/grafana.ini
     ![image](https://github.com/CH-KANG/Grafana/blob/master/Pic/auth.anony.png)
+    
+* Step3.匯入Panel面板
+  * Analysis tool (Dashboard)
