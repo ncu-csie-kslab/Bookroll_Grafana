@@ -146,3 +146,6 @@ MySQL         | Bookroll資料庫    |
    nohup python3 flask_provider_grafana_weekly_report.py 0<&- &> grafana_weekly_report.log &
    ```     
     
+**六. Moodle LTI連結**
+* 請利用admin帳號進入moodle，依照下列步驟註冊LTI
+*
