@@ -101,11 +101,20 @@ MySQL         | Bookroll資料庫    |
   ![image](https://github.com/CH-KANG/Grafana/blob/master/Pic/link.PNG)
   
 * Step5.修改python檔案
-  * 請下載或Clone
+  * 請下載以下兩個python檔案，分別對應Analysis tool (Dashboard) 與 Weekly report (Dashboard)
+  * Analysis tool (Dashboard) 
+  
+    請下載或Clone
     
-    https://github.com/CH-KANG/Grafana/blob/master/Weekly%20Report-1583397606381.json
+    https://github.com/CH-KANG/Grafana/blob/master/flask_provider_Analysis_tool.py
     
-  * 打開python檔案(以為例)
+  * Weekly report (Dashboard) 
+  
+    請下載或Clone
+    
+    https://github.com/CH-KANG/Grafana/blob/master/flask_provider_grafana_weekly_report.py
+    
+  * 打開python檔案，修改兩個python檔案(以Analysis tool為例)
   
     請修改以下部分
 
@@ -116,8 +125,7 @@ MySQL         | Bookroll資料庫    |
 
    ```python
    def test():
-       tool_provider = FlaskToolProvider.from_flask_request(request=request)
-       temp = tool_provider.launch_params.__dict__['_params']['context_label']
+                 ...
        return redirect('.......&var-flask_test=' + temp+'&refresh=1m') 
        #請將註1* 的網址複製到 '.......&var-flask_test=' 取代內容
        #並將&var-flask_test=之後的字元都去除
