@@ -9,4 +9,5 @@ Bookroll      | 電子書平台        |
 MySQL         | Bookroll資料庫    | 
 
 **二.系統流程圖**
-![image] (https://github.com/CH-KANG/Grafana/blob/master/flow_chart.png)
+
+! [image] (https://github.com/CH-KANG/Grafana/blob/master/flow_chart.png)
