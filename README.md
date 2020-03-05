@@ -126,5 +126,5 @@ MySQL         | Bookroll資料庫    |
    ```python
    if __name__=="__main__":
        app.debug = True
-       app.run(host="0.0.0.0", port=8090) #請記住port號碼 註2*
+       app.run(host="0.0.0.0", port=8090) #可更改port號碼 並請記住port號碼 註2*
    ```  
