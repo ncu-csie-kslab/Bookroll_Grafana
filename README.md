@@ -150,14 +150,18 @@ MySQL         | Bookroll資料庫    |
 **六. Moodle LTI連結**
 * 請利用admin帳號進入moodle，依照下列步驟註冊LTI
   * 點選網站管理
+  
   ![image](https://github.com/CH-KANG/Grafana/blob/master/Pic/lti01.png)
 
   * 點選管理工具
+  
   ![image](https://github.com/CH-KANG/Grafana/blob/master/Pic/lti02.png)
   
   * 點選手動配置一個工具
+  
   ![image](https://github.com/CH-KANG/Grafana/blob/master/Pic/lti03.png)  
   
   * 輸入工具名稱 / 設定的python檔案網址(註3*) /  客戶密鑰, 共享的密鑰(註2*) / 預設啟動容器選擇 新視窗
+  
   ![image](https://github.com/CH-KANG/Grafana/blob/master/Pic/lti02.png)
   
