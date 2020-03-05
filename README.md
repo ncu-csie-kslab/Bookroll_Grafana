@@ -58,5 +58,10 @@ MySQL         | Bookroll資料庫    |
     
     https://github.com/CH-KANG/Grafana/blob/master/Analysis%20tool%20(Dashboard)-1583397153634.json
     
+  * Weekly report (Dashboard) 
+  
+    請下載或Clone
     
-  * Analysis tool (Dashboard)
+    https://github.com/CH-KANG/Grafana/blob/master/Weekly%20Report-1583397606381.json
+
+
