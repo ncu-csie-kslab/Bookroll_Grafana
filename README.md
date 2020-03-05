@@ -14,6 +14,6 @@ MySQL         | Bookroll資料庫    |
 **三. 安裝前需求**
 * 系統為Linux / Windows皆可
 * Python3
-  ** Ubuntu已有內建
-  ** Windows可下載 (https://www.python.org/downloads/)
-  ** 需求套件 : lti, oauthlib, flask
+  * Ubuntu已有內建
+  * Windows可下載 (https://www.python.org/downloads/)
+  * 需求套件 : lti, oauthlib, flask
