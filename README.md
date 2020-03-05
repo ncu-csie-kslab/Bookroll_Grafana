@@ -73,6 +73,8 @@ MySQL         | Bookroll資料庫    |
   
   ![image](https://github.com/CH-KANG/Grafana/blob/master/Pic/SQL.PNG)
   
+  * 填入Bookroll的MySQL ip 與 port
+  
 * Step4.匯入Panel面板
   * Analysis tool (Dashboard) 
   
