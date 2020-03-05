@@ -96,6 +96,6 @@ MySQL         | Bookroll資料庫    |
   
   ![image](https://github.com/CH-KANG/Grafana/blob/master/Pic/importjson.PNG)
   
+  * 匯入完成後開啟，選擇share dashborad，並記錄下此串網址
   
-
-
+  ![image](https://github.com/CH-KANG/Grafana/blob/master/Pic/link.PNG)
