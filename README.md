@@ -33,5 +33,13 @@ MySQL         | Bookroll資料庫    |
   * 請參考官方文件
     https://grafana.com/grafana/download?platform=linux
 
+https://github.com/CH-KANG/Grafana/blob/master/Pic/auth.anony.png
+
 **四. Grafana配置**
-* MySQL 
+* 啟動GrafanaL 
+  * 請參考官方文件
+    https://grafana.com/docs/grafana/latest/installation/debian/
+  * Linux為例
+   ```python
+   sudo service grafana-server start
+   ```
