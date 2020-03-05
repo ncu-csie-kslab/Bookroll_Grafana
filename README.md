@@ -13,6 +13,7 @@ MySQL         | Bookroll資料庫    |
 
 **三. 安裝前需求**
 * 系統為Linux / Windows皆可
+
 * Python3
   * Ubuntu已有內建
   * Windows可下載 (https://www.python.org/downloads/)
@@ -22,3 +23,10 @@ MySQL         | Bookroll資料庫    |
    pip install oauthlib
    pip install flask
    ```
+* MySQL   
+  * 安裝Bookroll時即安裝
+  
+* Grafana
+  * 可選擇Linux, Windows, Mac, Docker等安裝方式與系統
+  * 請參考官方文件
+    https://grafana.com/grafana/download?platform=linux
