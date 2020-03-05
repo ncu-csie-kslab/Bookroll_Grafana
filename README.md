@@ -43,11 +43,11 @@ MySQL         | Bookroll資料庫    |
   
     https://grafana.com/docs/grafana/latest/installation/debian/
   * 以Linux為例
-   ```python
+   ```
    sudo service grafana-server start
    ```
   * 以Windows為例   
-   ```python
+   ```
    cd '\Program Files\GrafanaLabs\grafana\bin'
    grafana-server.exe
    ```  
@@ -57,7 +57,7 @@ MySQL         | Bookroll資料庫    |
     以Linux為例，路徑為 /etc/grafana/grafana.ini
     
     開啟後需要restart
-   ```python
+   ```
    sudo service grafana-server restart
    ```    
     ![image](https://github.com/CH-KANG/Grafana/blob/master/Pic/auth.anony.png)
