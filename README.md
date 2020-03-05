@@ -50,6 +50,11 @@ MySQL         | Bookroll資料庫    |
   * These system settings are defined in or custom.ini
   
     以Linux為例，路徑為 /etc/grafana/grafana.ini
+    
+    開啟後需要restart
+   ```python
+   sudo service grafana-server restart
+   ```    
     ![image](https://github.com/CH-KANG/Grafana/blob/master/Pic/auth.anony.png)
     
 * Step3.匯入Panel面板
