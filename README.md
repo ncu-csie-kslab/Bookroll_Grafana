@@ -148,7 +148,8 @@ MySQL         | Bookroll資料庫    |
 
 ![image]()
 **六. Moodle LTI連結**
-* 請利用admin帳號進入moodle，依照下列步驟註冊LTI
+* Step1. 請利用admin帳號進入moodle，依照下列步驟註冊LTI
+  * Analysis tool (Dashboard) 與 Weekly report (Dashboard)都需要註冊，在這裡以Analysis tool為例
   * 點選網站管理
   
   ![image](https://github.com/CH-KANG/Grafana/blob/master/Pic/lti01.png)
@@ -163,5 +164,21 @@ MySQL         | Bookroll資料庫    |
   
   * 輸入工具名稱 / 設定的python檔案網址(註3*) /  客戶密鑰, 共享的密鑰(註2*) / 預設啟動容器選擇 新視窗
   
-  ![image](https://github.com/CH-KANG/Grafana/blob/master/Pic/lti02.png)
+  ![image](https://github.com/CH-KANG/Grafana/blob/master/Pic/lti04.png)
   
+* Step2. 最後新增工具即可完成!
+  * 啟動編輯模式
+  
+  ![image](https://github.com/CH-KANG/Grafana/blob/master/Pic/lti05.png)
+
+  * 新增活動或資源
+  
+  ![image](https://github.com/CH-KANG/Grafana/blob/master/Pic/lti06.png)
+  
+  * 點選外部工具
+  
+  ![image](https://github.com/CH-KANG/Grafana/blob/master/Pic/lti07.png)  
+  
+  * 選擇Step1註冊的工具，完成!
+  
+  ![image](https://github.com/CH-KANG/Grafana/blob/master/Pic/lti08.png)   
