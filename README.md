@@ -136,3 +136,12 @@ MySQL         | Bookroll資料庫    |
        app.debug = True
        app.run(host="0.0.0.0", port=8090) #可更改port號碼 並請記住port號碼 註2*
    ```  
+
+  * 修改完成後請背景執行兩個檔案並且不中斷
+    
+    以Linux為例，參考指令
+   ```python
+   nohup python3 flask_provider_Analysis_tool.py 0<&- &> analysis_tool.log &
+   nohup python3 flask_provider_grafana_weekly_report.py 0<&- &> grafana_weekly_report.log &
+   ```     
+    
