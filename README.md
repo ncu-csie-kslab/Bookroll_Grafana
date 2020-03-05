@@ -100,7 +100,8 @@ MySQL         | Bookroll資料庫    |
   
   ![image](https://github.com/CH-KANG/Grafana/blob/master/Pic/link.PNG)
   
-* Step5.修改python檔案
+**五. Python檔案配置**
+* 下載Python檔案
   * 請下載以下兩個python檔案，分別對應Analysis tool (Dashboard) 與 Weekly report (Dashboard)
   * Analysis tool (Dashboard) 
   
@@ -113,7 +114,7 @@ MySQL         | Bookroll資料庫    |
     請下載或Clone
     
     https://github.com/CH-KANG/Grafana/blob/master/flask_provider_grafana_weekly_report.py
-    
+* 修改Python檔    
   * 打開python檔案，修改兩個python檔案(以Analysis tool為例)
   
     請修改以下部分
@@ -136,7 +137,7 @@ MySQL         | Bookroll資料庫    |
        app.debug = True
        app.run(host="0.0.0.0", port=8090) #可更改port號碼 並請記住port號碼 註2*
    ```  
-
+* 執行Python檔
   * 修改完成後請背景執行兩個檔案並且不中斷
     
     以Linux為例，參考指令
