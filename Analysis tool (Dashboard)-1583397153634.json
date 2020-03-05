@@ -1,0 +1,2207 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_130MYSQL",
+      "label": "130mysql",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "mysql",
+      "pluginName": "MySQL"
+    }
+  ],
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "6.4.4"
+    },
+    {
+      "type": "panel",
+      "id": "graph",
+      "name": "Graph",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "michaeldmoore-multistat-panel",
+      "name": "Multistat",
+      "version": "1.2.5"
+    },
+    {
+      "type": "datasource",
+      "id": "mysql",
+      "name": "MySQL",
+      "version": "1.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "singlestat",
+      "name": "Singlestat",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "table",
+      "name": "Table",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "text",
+      "name": "Text",
+      "version": ""
+    }
+  ],
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": null,
+  "iteration": 1583397109905,
+  "links": [],
+  "panels": [
+    {
+      "collapsed": false,
+      "datasource": "${DS_130MYSQL}",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 50,
+      "panels": [],
+      "title": "Overview",
+      "type": "row"
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorPrefix": false,
+      "colorValue": true,
+      "colors": [
+        "#73BF69",
+        "rgba(237, 129, 40, 0.89)",
+        "#F2495C"
+      ],
+      "datasource": "${DS_130MYSQL}",
+      "format": "none",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 0,
+        "y": 1
+      },
+      "id": 34,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "options": {},
+      "pluginVersion": "6.4.4",
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "100%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false,
+        "ymax": null,
+        "ymin": null
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  count(DISTINCT log.user_id) as 'Learners (#)',\n  $__timeGroupAlias(log.operation_date,$__interval)\nFROM br_event_log as log, br_contents as cont, br_contents_directory as dir\nWHERE\n  $__timeFilter(operation_date)  and log.contents_name IN ($contents_name) and\n  cont.parent_id = dir.directory_id and cont.contents_id = log.contents_id and dir.name = '$flask_test'",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "parent_id"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "br_1081_cl",
+          "timeColumn": "operation_date",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "thresholds": "",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Learners (#)",
+      "type": "singlestat",
+      "valueFontSize": "200%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "first"
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorValue": true,
+      "colors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a"
+      ],
+      "datasource": "${DS_130MYSQL}",
+      "format": "none",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 4,
+        "y": 1
+      },
+      "id": 36,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "options": {},
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false,
+        "ymax": null,
+        "ymin": null
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  count(cont.parent_id) / count(DISTINCT log.user_id) as 'Events / People',\n  $__timeGroupAlias(log.operation_date,$__interval)\nFROM br_event_log as log, br_contents as cont, br_contents_directory as dir\nWHERE\n  $__timeFilter(operation_date)  and log.contents_name IN ($contents_name) and\n  cont.parent_id = dir.directory_id and cont.contents_id = log.contents_id and dir.name = '$flask_test'",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "parent_id"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "br_1081_cl",
+          "timeColumn": "operation_date",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "thresholds": "",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Events (per person)",
+      "type": "singlestat",
+      "valueFontSize": "200%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "avg"
+    },
+    {
+      "aliasColors": {},
+      "bars": true,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${DS_130MYSQL}",
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 6,
+        "w": 16,
+        "x": 8,
+        "y": 1
+      },
+      "id": 71,
+      "legend": {
+        "alignAsTable": false,
+        "avg": false,
+        "current": false,
+        "hideEmpty": false,
+        "hideZero": false,
+        "max": false,
+        "min": false,
+        "rightSide": false,
+        "show": false,
+        "sideWidth": null,
+        "total": false,
+        "values": false
+      },
+      "lines": false,
+      "linewidth": 1,
+      "maxPerRow": 24,
+      "nullPointMode": "connected",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "repeatDirection": "h",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [
+            {
+              "params": [
+                "$__interval",
+                "none"
+              ],
+              "type": "time"
+            }
+          ],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  $__timeGroupAlias(log.operation_date,$__interval),\n  log.page_no as 次數\nFROM br_event_log as log, br_contents as cont, br_contents_directory as dir\nWHERE\n  $__timeFilter(operation_date)  and log.contents_name IN ($contents_name)\n  and cont.parent_id = dir.directory_id and cont.contents_id = log.contents_id and dir.name = '$flask_test'",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "parent_id"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "count"
+                ],
+                "type": "aggregate"
+              },
+              {
+                "params": [
+                  "parent_id"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "table": "br_1081_cl",
+          "timeColumn": "operation_date",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "All Events 頁數統計",
+      "tooltip": {
+        "shared": false,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": 100,
+        "max": null,
+        "min": 1,
+        "mode": "histogram",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorValue": false,
+      "colors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a"
+      ],
+      "datasource": "${DS_130MYSQL}",
+      "format": "none",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 0,
+        "y": 7
+      },
+      "id": 46,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "options": {},
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false,
+        "ymax": null,
+        "ymin": null
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  count(cont.parent_id) / count(DISTINCT log.user_id),\n  $__timeGroupAlias(log.operation_date,$__interval)\nFROM br_event_log as log, br_contents as cont, br_contents_directory as dir\nWHERE\n  $__timeFilter(operation_date)  and log.contents_name IN ($contents_name) and log.operation_name = 'ADD BOOKMARK' and \n  cont.parent_id = dir.directory_id and cont.contents_id = log.contents_id and dir.name = '$flask_test'",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "parent_id"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "br_1081_cl",
+          "timeColumn": "operation_date",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "thresholds": "",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "ADD BOOKMARK (per pesron)",
+      "type": "singlestat",
+      "valueFontSize": "200%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "avg"
+    },
+    {
+      "aliasColors": {},
+      "bars": true,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${DS_130MYSQL}",
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 6,
+        "w": 20,
+        "x": 4,
+        "y": 7
+      },
+      "id": 28,
+      "legend": {
+        "alignAsTable": false,
+        "avg": false,
+        "current": false,
+        "hideEmpty": false,
+        "hideZero": false,
+        "max": false,
+        "min": false,
+        "rightSide": false,
+        "show": false,
+        "sideWidth": null,
+        "total": false,
+        "values": false
+      },
+      "lines": false,
+      "linewidth": 1,
+      "maxPerRow": 24,
+      "nullPointMode": "connected",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "repeat": null,
+      "repeatDirection": "h",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [
+            {
+              "params": [
+                "$__interval",
+                "none"
+              ],
+              "type": "time"
+            }
+          ],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  $__timeGroupAlias(log.operation_date,$__interval),\n  log.page_no as 次數\nFROM br_event_log as log, br_contents as cont, br_contents_directory as dir\nWHERE\n  $__timeFilter(operation_date) and operation_name = 'ADD BOOKMARK' and log.contents_name IN ($contents_name)\n  and cont.parent_id = dir.directory_id and cont.contents_id = log.contents_id and dir.name = '$flask_test'",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "parent_id"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "count"
+                ],
+                "type": "aggregate"
+              },
+              {
+                "params": [
+                  "parent_id"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "table": "br_1081_cl",
+          "timeColumn": "operation_date",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "ADD BOOKMARK 頁數統計",
+      "tooltip": {
+        "shared": false,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": 100,
+        "max": null,
+        "min": 1,
+        "mode": "histogram",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorValue": true,
+      "colors": [
+        "#8F3BB8",
+        "rgba(237, 129, 40, 0.89)",
+        "#8F3BB8"
+      ],
+      "datasource": "${DS_130MYSQL}",
+      "format": "none",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 0,
+        "y": 13
+      },
+      "id": 48,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "options": {},
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false,
+        "ymax": null,
+        "ymin": null
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  count(cont.parent_id) / count(DISTINCT log.user_id),\n  $__timeGroupAlias(log.operation_date,$__interval)\nFROM br_event_log as log, br_contents as cont, br_contents_directory as dir\nWHERE\n  $__timeFilter(operation_date)  and log.contents_name IN ($contents_name) and log.operation_name = 'NOTGETIT' and \n  cont.parent_id = dir.directory_id and cont.contents_id = log.contents_id and dir.name = '$flask_test'",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "parent_id"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "br_1081_cl",
+          "timeColumn": "operation_date",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "thresholds": "",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "NOT GET IT (per person)",
+      "type": "singlestat",
+      "valueFontSize": "200%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "avg"
+    },
+    {
+      "aliasColors": {},
+      "bars": true,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${DS_130MYSQL}",
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 6,
+        "w": 20,
+        "x": 4,
+        "y": 13
+      },
+      "id": 70,
+      "legend": {
+        "alignAsTable": false,
+        "avg": false,
+        "current": false,
+        "hideEmpty": false,
+        "hideZero": false,
+        "max": false,
+        "min": false,
+        "rightSide": false,
+        "show": false,
+        "sideWidth": null,
+        "total": false,
+        "values": false
+      },
+      "lines": false,
+      "linewidth": 1,
+      "maxPerRow": 24,
+      "nullPointMode": "connected",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "repeatDirection": "h",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [
+            {
+              "params": [
+                "$__interval",
+                "none"
+              ],
+              "type": "time"
+            }
+          ],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  $__timeGroupAlias(log.operation_date,$__interval),\n  log.page_no as 次數\nFROM br_event_log as log, br_contents as cont, br_contents_directory as dir\nWHERE\n  $__timeFilter(operation_date) and operation_name = 'NOTGETIT' and log.contents_name IN ($contents_name)\n  and cont.parent_id = dir.directory_id and cont.contents_id = log.contents_id and dir.name = '$flask_test'",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "parent_id"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "count"
+                ],
+                "type": "aggregate"
+              },
+              {
+                "params": [
+                  "parent_id"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "table": "br_1081_cl",
+          "timeColumn": "operation_date",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "NOT GET IT 頁數統計",
+      "tooltip": {
+        "shared": false,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": 100,
+        "max": null,
+        "min": 1,
+        "mode": "histogram",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "collapsed": false,
+      "datasource": "${DS_130MYSQL}",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 19
+      },
+      "id": 32,
+      "panels": [],
+      "repeat": null,
+      "title": "Marker",
+      "type": "row"
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorValue": true,
+      "colors": [
+        "#C4162A",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a"
+      ],
+      "datasource": "${DS_130MYSQL}",
+      "format": "none",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 12,
+        "x": 0,
+        "y": 20
+      },
+      "id": 40,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "options": {},
+      "pluginVersion": "6.4.4",
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false,
+        "ymax": null,
+        "ymin": null
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  count(cont.parent_id) / count(DISTINCT log.user_id),\n  $__timeGroupAlias(log.operation_date,$__interval)\nFROM br_event_log as log, br_contents as cont, br_contents_directory as dir\nWHERE\n  $__timeFilter(operation_date)  and log.contents_name IN ($contents_name)  and log.marker_color = 'rgb(255,0,0)' and log.operation_name = 'ADD MARKER' and \n  cont.parent_id = dir.directory_id and cont.contents_id = log.contents_id and dir.name = '$flask_test' and log.marker_text != ''",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "parent_id"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "br_1081_cl",
+          "timeColumn": "operation_date",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "thresholds": "",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Red Markers-重要 (per person)",
+      "type": "singlestat",
+      "valueFontSize": "200%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "avg"
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorValue": true,
+      "colors": [
+        "#FADE2A",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a"
+      ],
+      "datasource": "${DS_130MYSQL}",
+      "format": "none",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 12,
+        "x": 12,
+        "y": 20
+      },
+      "id": 38,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "options": {},
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false,
+        "ymax": null,
+        "ymin": null
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  count(cont.parent_id) / count(DISTINCT log.user_id),\n  $__timeGroupAlias(log.operation_date,$__interval)\nFROM br_event_log as log, br_contents as cont, br_contents_directory as dir\nWHERE\n  $__timeFilter(operation_date)  and log.contents_name IN ($contents_name)  and log.marker_color = 'rgb(255,255,0)' and log.operation_name = 'ADD MARKER' and \n  cont.parent_id = dir.directory_id and cont.contents_id = log.contents_id and dir.name = '$flask_test' and log.marker_text != ''",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "parent_id"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "br_1081_cl",
+          "timeColumn": "operation_date",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "thresholds": "",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Yellow Markers-不清楚 (per person)",
+      "type": "singlestat",
+      "valueFontSize": "200%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "avg"
+    },
+    {
+      "columns": [],
+      "datasource": "${DS_130MYSQL}",
+      "fontSize": "100%",
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 0,
+        "y": 24
+      },
+      "id": 26,
+      "options": {},
+      "pageSize": null,
+      "showHeader": true,
+      "sort": {
+        "col": 0,
+        "desc": false
+      },
+      "styles": [
+        {
+          "alias": "Time",
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "pattern": "Time",
+          "type": "date"
+        }
+      ],
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  log.operation_date,\n  muser.username,\n  log.user_id,\n  log.page_no,\n  log.marker_text as marker_text\n\nFROM br_event_log as log, br_contents as cont, br_contents_directory as dir, mdl_user as muser\nWHERE\n  $__timeFilter(operation_date) and operation_name = 'ADD MARKER' and log.contents_name IN ($contents_name) and log.marker_color = 'rgb(255,0,0)'\n  and cont.parent_id = dir.directory_id and cont.contents_id = log.contents_id and dir.name = '$flask_test'\n  and substring_index(log.user_id, '@', 1) = muser.id and log.marker_text != '';\n  \n  ",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "「重要」  Marker_Text ",
+      "transform": "table",
+      "type": "table"
+    },
+    {
+      "columns": [],
+      "datasource": "${DS_130MYSQL}",
+      "fontSize": "100%",
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 12,
+        "y": 24
+      },
+      "id": 52,
+      "options": {},
+      "pageSize": null,
+      "showHeader": true,
+      "sort": {
+        "col": 0,
+        "desc": false
+      },
+      "styles": [
+        {
+          "alias": "Time",
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "pattern": "Time",
+          "type": "date"
+        }
+      ],
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  log.operation_date,\n  muser.username,\n  log.user_id,\n  log.page_no,\n  log.marker_text as marker_text\n\nFROM br_event_log as log, br_contents as cont, br_contents_directory as dir, mdl_user as muser\nWHERE\n  $__timeFilter(operation_date) and operation_name = 'ADD MARKER' and log.contents_name IN ($contents_name) and log.marker_color = 'rgb(255,255,0)'\n  and cont.parent_id = dir.directory_id and cont.contents_id = log.contents_id and dir.name = '$flask_test' and log.marker_text != ''\n  and substring_index(log.user_id, '@', 1) = muser.id;",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "「不清楚」  Marker_Text ",
+      "transform": "table",
+      "type": "table"
+    },
+    {
+      "aliasColors": {},
+      "bars": true,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${DS_130MYSQL}",
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 24,
+        "x": 0,
+        "y": 33
+      },
+      "id": 59,
+      "legend": {
+        "alignAsTable": false,
+        "avg": false,
+        "current": false,
+        "hideEmpty": false,
+        "hideZero": false,
+        "max": false,
+        "min": false,
+        "rightSide": false,
+        "show": false,
+        "sideWidth": null,
+        "total": false,
+        "values": false
+      },
+      "lines": false,
+      "linewidth": 1,
+      "maxPerRow": 24,
+      "nullPointMode": "connected",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "repeatDirection": "h",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [
+            {
+              "params": [
+                "$__interval",
+                "none"
+              ],
+              "type": "time"
+            }
+          ],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  $__timeGroupAlias(log.operation_date,$__interval),\n  log.page_no as 次數\nFROM br_event_log as log, br_contents as cont, br_contents_directory as dir\nWHERE\n  $__timeFilter(operation_date) and operation_name = 'ADD MARKER' and log.contents_name IN ($contents_name) \n  and cont.parent_id = dir.directory_id and cont.contents_id = log.contents_id and dir.name = '$flask_test'",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "parent_id"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "count"
+                ],
+                "type": "aggregate"
+              },
+              {
+                "params": [
+                  "parent_id"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "table": "br_1081_cl",
+          "timeColumn": "operation_date",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "ADD MARKER 頁數統計",
+      "tooltip": {
+        "shared": false,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": 100,
+        "max": null,
+        "min": 1,
+        "mode": "histogram",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "collapsed": false,
+      "datasource": "${DS_130MYSQL}",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 42
+      },
+      "id": 63,
+      "panels": [],
+      "title": "Memo",
+      "type": "row"
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorValue": false,
+      "colors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a"
+      ],
+      "datasource": "${DS_130MYSQL}",
+      "format": "none",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 12,
+        "x": 0,
+        "y": 43
+      },
+      "id": 42,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "options": {},
+      "pluginVersion": "6.4.4",
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false,
+        "ymax": null,
+        "ymin": null
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  count(cont.parent_id) / count(DISTINCT log.user_id),\n  $__timeGroupAlias(log.operation_date,$__interval)\nFROM br_event_log as log, br_contents as cont, br_contents_directory as dir\nWHERE\n  $__timeFilter(operation_date)  and log.contents_name IN ($contents_name) and log.operation_name = 'ADD MEMO' and \n  cont.parent_id = dir.directory_id and cont.contents_id = log.contents_id and dir.name = '$flask_test' and log.memo_text != \"\"",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "parent_id"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "br_1081_cl",
+          "timeColumn": "operation_date",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "thresholds": "",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "ADD MEMO (per person)",
+      "type": "singlestat",
+      "valueFontSize": "200%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "avg"
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorValue": false,
+      "colors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a"
+      ],
+      "datasource": "${DS_130MYSQL}",
+      "format": "none",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 12,
+        "x": 12,
+        "y": 43
+      },
+      "id": 44,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "options": {},
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false,
+        "ymax": null,
+        "ymin": null
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  count(cont.parent_id) / count(DISTINCT log.user_id),\n  $__timeGroupAlias(log.operation_date,$__interval)\nFROM br_event_log as log, br_contents as cont, br_contents_directory as dir\nWHERE\n  $__timeFilter(operation_date)  and log.contents_name IN ($contents_name) and log.operation_name = 'ADD_HW_MEMO' and \n  cont.parent_id = dir.directory_id and cont.contents_id = log.contents_id and dir.name = '$flask_test'",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "parent_id"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "br_1081_cl",
+          "timeColumn": "operation_date",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "thresholds": "",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "ADD_HW_MEMO (per person)",
+      "type": "singlestat",
+      "valueFontSize": "200%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "avg"
+    },
+    {
+      "columns": [],
+      "datasource": "${DS_130MYSQL}",
+      "fontSize": "100%",
+      "gridPos": {
+        "h": 10,
+        "w": 24,
+        "x": 0,
+        "y": 48
+      },
+      "id": 58,
+      "options": {},
+      "pageSize": null,
+      "showHeader": true,
+      "sort": {
+        "col": 0,
+        "desc": false
+      },
+      "styles": [
+        {
+          "alias": "Time",
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "pattern": "Time",
+          "type": "date"
+        }
+      ],
+      "targets": [
+        {
+          "datasource": "${DS_130MYSQL}",
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  log.operation_date,\n  muser.username,\n  log.user_id,\n  log.page_no,\n  REPLACE(log.memo_text, ';:::nl:::;', ' ') as memo_text\nFROM br_event_log as log, br_contents as cont, br_contents_directory as dir, mdl_user as muser\nWHERE\n  $__timeFilter(operation_date) and operation_name = 'ADD MEMO' and log.contents_name IN ($contents_name)\n  and cont.parent_id = dir.directory_id and cont.contents_id = log.contents_id and dir.name = '$flask_test' and log.memo_text != \"\"\n  and substring_index(log.user_id, '@', 1) = muser.id;",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "parent_id"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "br_1081_cl",
+          "timeColumn": "operation_date",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Memo_text",
+      "transform": "table",
+      "type": "table"
+    },
+    {
+      "aliasColors": {},
+      "bars": true,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${DS_130MYSQL}",
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 58
+      },
+      "id": 56,
+      "legend": {
+        "alignAsTable": false,
+        "avg": false,
+        "current": false,
+        "hideEmpty": false,
+        "hideZero": false,
+        "max": false,
+        "min": false,
+        "rightSide": false,
+        "show": false,
+        "sideWidth": null,
+        "total": false,
+        "values": false
+      },
+      "lines": false,
+      "linewidth": 1,
+      "maxPerRow": 24,
+      "nullPointMode": "connected",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "repeatDirection": "h",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [
+            {
+              "params": [
+                "$__interval",
+                "none"
+              ],
+              "type": "time"
+            }
+          ],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  $__timeGroupAlias(log.operation_date,$__interval),\n  log.page_no as 次數\nFROM br_event_log as log, br_contents as cont, br_contents_directory as dir\nWHERE\n  $__timeFilter(operation_date) and operation_name = 'ADD MEMO' and log.contents_name IN ($contents_name)\n  and cont.parent_id = dir.directory_id and cont.contents_id = log.contents_id and dir.name = '$flask_test'\n",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "parent_id"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "count"
+                ],
+                "type": "aggregate"
+              },
+              {
+                "params": [
+                  "parent_id"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "table": "br_1081_cl",
+          "timeColumn": "operation_date",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "ADD MEMO 頁數統計",
+      "tooltip": {
+        "shared": false,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": 100,
+        "max": null,
+        "min": 1,
+        "mode": "histogram",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "collapsed": false,
+      "datasource": "${DS_130MYSQL}",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 66
+      },
+      "id": 65,
+      "panels": [],
+      "repeat": null,
+      "title": "Event statistics",
+      "type": "row"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${DS_130MYSQL}",
+      "fill": 3,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 10,
+        "w": 24,
+        "x": 0,
+        "y": 67
+      },
+      "id": 61,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": false,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 2,
+      "points": true,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": true,
+      "steppedLine": false,
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  $__timeGroupAlias(log.operation_date,$__interval),\n  sum(count(cont.parent_id)) over(ORDER BY log.operation_date) as 'Cumulative Sum'\nFROM br_event_log as log, br_contents as cont, br_contents_directory as dir\nWHERE\n  $__timeFilter(operation_date)  and log.contents_name IN ($contents_name) and\n  cont.parent_id = dir.directory_id and cont.contents_id = log.contents_id and dir.name = '$flask_test'\n  \ngroup by 1",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "parent_id"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "br_1081_cl",
+          "timeColumn": "operation_date",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Cumulative Sum Events",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "Aggregate": "all",
+      "BarPadding": 10,
+      "BaseLineColor": "#ff0000",
+      "BaseLineValue": 0,
+      "CurveType": "Monotone",
+      "DateFormat": "YYYY-MM-DD HH:mm:ss",
+      "DateTimeColName": "",
+      "DotColor": "white",
+      "DotSize": 10,
+      "EvenRowColor": "rgb(41, 41, 41)",
+      "FlashHighLimitBar": false,
+      "FlashLowLimitBar": false,
+      "GroupColName": "",
+      "GroupCols": 0,
+      "GroupGap": 5,
+      "GroupLabelColor": "#ffffff",
+      "GroupLabelFontSize": "20%",
+      "GroupNameFilter": "",
+      "GroupSortString": "",
+      "HighAxisColor": "#73BF69",
+      "HighBarColor": "#73BF69",
+      "HighLimitBarColor": "#ff0000",
+      "HighLimitBarFlashColor": "#ffa500",
+      "HighLimitBarFlashTimeout": 1000,
+      "HighLimitLineColor": "#ff0000",
+      "HighLimitValue": 0.33,
+      "HighSideMargin": 22,
+      "Horizontal": true,
+      "LabelColName": "metric",
+      "LabelColor": "#ffffff",
+      "LabelFontSize": "80%",
+      "LabelMargin": null,
+      "LabelNameFilter": "",
+      "LableAngle": 0,
+      "LineColor": "blue",
+      "LineWidth": 5,
+      "LowAxisColor": "#73BF69",
+      "LowBarColor": "#73BF69",
+      "LowLimitBarColor": "#ff0000",
+      "LowLimitBarFlashColor": "#ffa500",
+      "LowLimitBarFlashTimeout": 200,
+      "LowLimitLineColor": "#ff0000",
+      "LowLimitValue": null,
+      "LowSideMargin": 22,
+      "MaxLineColor": "rgb(74, 232, 12)",
+      "MaxLineValue": null,
+      "MinLineValue": 0,
+      "OddRowColor": "rgba(33, 33, 34, 0.92)",
+      "OutOfRangeLabelColor": "#ffffff",
+      "RecolorHighLimitBar": false,
+      "RecolorLowLimitBar": false,
+      "ScaleFactor": 1,
+      "ShowBars": true,
+      "ShowBaseLine": true,
+      "ShowDate": false,
+      "ShowGroupLabels": true,
+      "ShowHighLimitLine": false,
+      "ShowLabels": true,
+      "ShowLeftAxis": true,
+      "ShowLines": false,
+      "ShowLowLimitLine": false,
+      "ShowMaxLine": false,
+      "ShowMinLine": true,
+      "ShowRightAxis": true,
+      "ShowTooltips": true,
+      "ShowValues": false,
+      "SortColName": "count(DISTINCT log.page_no)",
+      "SortDirection": "descending",
+      "TZOffsetHours": 0,
+      "TooltipDateFormat": "YYYY-MM-DD HH:mm:ss",
+      "ValueColName": "count(DISTINCT log.page_no)",
+      "ValueColor": "#ffffff",
+      "ValueDecimals": 1,
+      "ValueFontSize": "20%",
+      "ValuePosition": "top",
+      "datasource": "${DS_130MYSQL}",
+      "gridPos": {
+        "h": 31,
+        "w": 24,
+        "x": 0,
+        "y": 77
+      },
+      "id": 77,
+      "options": {},
+      "pluginVersion": "6.4.4",
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  $__timeGroupAlias(log.operation_date,$__interval),\n  muser.username as metric,\n  count(DISTINCT log.page_no)\nFROM br_event_log as log, br_contents as cont, br_contents_directory as dir, mdl_user as muser\nWHERE\n  $__timeFilter(operation_date) and log.contents_name IN ($contents_name)\n  and cont.parent_id = dir.directory_id and cont.contents_id = log.contents_id and dir.name = '$flask_test'\n  and substring_index(log.user_id, '@', 1) = muser.id\n  \ngroup by muser.username;",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "parent_id"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "br_1081_cl",
+          "timeColumn": "operation_date",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Reading Completion",
+      "type": "michaeldmoore-multistat-panel"
+    },
+    {
+      "collapsed": false,
+      "datasource": "${DS_130MYSQL}",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 108
+      },
+      "id": 76,
+      "panels": [],
+      "title": "聯絡資訊",
+      "type": "row"
+    },
+    {
+      "content": "\n# 圖表許願區\n***\n>有任何圖表的需求或問題請寄信至   聯絡信箱： bookrolltaiwan@gmail.com \n\n>估過後可能新增功能",
+      "datasource": "${DS_130MYSQL}",
+      "description": "",
+      "gridPos": {
+        "h": 10,
+        "w": 24,
+        "x": 0,
+        "y": 109
+      },
+      "id": 69,
+      "links": [],
+      "mode": "markdown",
+      "options": {},
+      "repeat": null,
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "",
+      "transparent": true,
+      "type": "text"
+    }
+  ],
+  "refresh": "1m",
+  "schemaVersion": 20,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "selected": true,
+          "text": "1081_創意學習_楊鎮華教師",
+          "value": "1081_創意學習_楊鎮華教師"
+        },
+        "hide": 2,
+        "label": "flask_test",
+        "name": "flask_test",
+        "options": [
+          {
+            "selected": true,
+            "text": "1081_創意學習_楊鎮華教師",
+            "value": "1081_創意學習_楊鎮華教師"
+          }
+        ],
+        "query": "1081_創意學習_楊鎮華教師",
+        "skipUrlSync": false,
+        "type": "textbox"
+      },
+      {
+        "allValue": "",
+        "current": {},
+        "datasource": "${DS_130MYSQL}",
+        "definition": "SELECT distinct (cont.title)  FROM br_event_log as log, br_contents as cont, br_contents_directory as dir   WHERE  (cont.del_flag = 0) and  cont.parent_id = dir.directory_id and cont.contents_id = log.contents_id and dir.name = '$flask_test' ;",
+        "hide": 0,
+        "includeAll": true,
+        "label": "contents_name",
+        "multi": false,
+        "name": "contents_name",
+        "options": [],
+        "query": "SELECT distinct (cont.title)  FROM br_event_log as log, br_contents as cont, br_contents_directory as dir   WHERE  (cont.del_flag = 0) and  cont.parent_id = dir.directory_id and cont.contents_id = log.contents_id and dir.name = '$flask_test' ;",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      }
+    ]
+  },
+  "time": {
+    "from": "now-180d",
+    "to": "now+8h"
+  },
+  "timepicker": {
+    "nowDelay": "",
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ]
+  },
+  "timezone": "utc",
+  "title": "Analysis tool (Dashboard)",
+  "uid": "ymgPI-1Wz5",
+  "version": 46
+}
