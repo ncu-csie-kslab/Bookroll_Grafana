@@ -2,8 +2,8 @@
 **一.預先安裝
 請確認Bookroll、Mysql是否已經安裝**
 
-Age           | Time  | Food | Gold | Requirement
---------------|:-----:|-----:| ----:|------------------------
-Feudal Age    | 02:10 |  500 |    0 | Dark Age building x 2
-Castle Age    | 02:40 |  800 |  200 | Feudal Age building x 2
-Imperial Age  | 03:30 | 1000 |  800 | Castle Age building x 2  
+系統名稱      | 系統類型  | 
+--------------|:-----:|---------
+Moodle    | 帳號單一登入系統 |  
+Bookroll    | 電子書平台 |  
+MySQL  | Bookroll資料庫 | 
