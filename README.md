@@ -76,6 +76,9 @@ MySQL         | Bookroll資料庫    |
   * 填入Bookroll的MySQL ip 與 port
   
 * Step4.匯入Panel面板
+  * 點選 + → Create → import
+  
+  ![image](https://github.com/CH-KANG/Grafana/blob/master/Pic/import.png)
   * Analysis tool (Dashboard) 
   
     請下載或Clone
