@@ -48,6 +48,7 @@ MySQL         | Bookroll資料庫    |
    ```
 * Step2.用vim或其他編輯器開啟訪客模式(auth.anoymous)
   * These system settings are defined in or custom.ini
+  
     以Linux為例，路徑為 /etc/grafana/grafana.ini
     ![image](https://github.com/CH-KANG/Grafana/blob/master/Pic/auth.anony.png)
     
