@@ -17,7 +17,6 @@ MySQL         | Bookroll資料庫    |
   * Ubuntu已有內建
   * Windows可下載 (https://www.python.org/downloads/)
   * 需求套件 : lti, oauthlib, flask
-  *
    ```python
    pip install lti
    pip install oauthlib
