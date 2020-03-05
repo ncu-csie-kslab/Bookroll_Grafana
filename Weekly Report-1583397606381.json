@@ -1,0 +1,1462 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_130MYSQL",
+      "label": "130mysql",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "mysql",
+      "pluginName": "MySQL"
+    }
+  ],
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "6.4.4"
+    },
+    {
+      "type": "panel",
+      "id": "grafana-piechart-panel",
+      "name": "Pie Chart",
+      "version": "1.3.9"
+    },
+    {
+      "type": "panel",
+      "id": "graph",
+      "name": "Graph",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "heatmap",
+      "name": "Heatmap",
+      "version": ""
+    },
+    {
+      "type": "datasource",
+      "id": "mysql",
+      "name": "MySQL",
+      "version": "1.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "text",
+      "name": "Text",
+      "version": ""
+    }
+  ],
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": null,
+  "iteration": 1583397594107,
+  "links": [],
+  "panels": [
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${DS_130MYSQL}",
+      "fill": 0,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 44,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null as zero",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 2,
+      "points": true,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT time , username, ((class_A/max_a*100*0.1) + (class_B/max_b*100*0.2) + (class_C/max_c*100*0.2) +(class_D/max_d*100*0.2) + (class_E/max_e*100*0.2) + (class_F/max_f*100*0.1))as score\nfrom(\nSELECT table2.time,username,class_A,class_B,class_C,class_D,class_E,class_F,max_a,max_b,max_c,max_d,max_e,max_f\nfrom(\nSELECT time , max(class_A) as max_a,max(class_B) as max_b , max(class_C) as max_c ,max(class_D) as max_d ,max(class_E) as max_e , max(class_F) as max_f\nFROM\n(\n\tSELECT time,username,\n\tcount(if(c_name = 'c_file',1,null))as class_A,\n\tcount(if(c_name = 'c_bookmark',1,null))as class_B,\n\tcount(if(c_name = 'c_maker',1,null))as class_C,\n\tcount(if(c_name = 'c_memo',1,null))as class_D,\n\tcount(if(c_name = 'c_surfing',1,null))as class_E,\n\tcount(if(c_name = 'c_other',1,null))as class_F\n\tFROM\n    (\n\t\tSELECT  STR_TO_DATE(CONCAT(DATE_FORMAT(log.operation_date,'%Y%u'), 'Sunday'), '%X %V %W') as time,username,\n\t\t(CASE operation_name WHEN 'OPEN' THEN 'c_file' WHEN 'CLOSE' THEN 'c_file' \n\t\t\t\t\t\tWHEN 'ADD BOOKMARK' THEN 'c_bookmark' WHEN 'DELETE BOOKMARK' THEN 'c_bookmark' \n\t\t\t\t\t\tWHEN 'ADD MARKER' THEN 'c_maker' WHEN 'DELETE MARKER' THEN 'c_maker'\n\t\t\t\t\t\tWHEN 'ADD MEMO' THEN 'c_memo' WHEN 'ADD_HW_MEMO' THEN 'c_memo' WHEN 'DELETE_MEMO' THEN 'c_memo' WHEN 'CHANGE MEMO' THEN 'c_memo' WHEN 'CLEAR_HW_MEMO' THEN 'c_memo' WHEN 'UNDO_HW_MEMO' THEN 'c_memo'\n\t\t\t\t\t\tWHEN 'NEXT' THEN 'c_surfing' WHEN 'PREV' THEN 'c_surfing' WHEN 'PAGE_JUMP' THEN 'c_surfing' WHEN 'BOOKMARK_JUMP' THEN 'c_surfing'\n\t\t\t\t\t\tWHEN 'SEARCH'THEN 'c_other' WHEN'SEARCH_JUMP'THEN 'c_other' WHEN'OPEN_RECOMMENDATION'THEN 'c_other' WHEN'REGIST CONTENTS'THEN 'c_other' WHEN'CLOSE_RECOMMENDATION'THEN 'c_other' WHEN'ADD_RECOMMENDATION'THEN 'c_other' WHEN'QUIZ_ANSWER_CORRECT'THEN 'c_other' WHEN'QUIZ_ANSWER'THEN 'c_other' WHEN'CLICK_RECOMMENDATION'THEN 'c_other' WHEN'GETIT'THEN 'c_other' WHEN'LINK_CLICK'THEN 'c_other' WHEN'NOTGETIT'THEN 'c_other' WHEN'MEMO_JUMP'THEN 'c_other' WHEN'DELETE_RECOMMENDATION' THEN 'c_other'\n\t\t\t\t\t\tend) as c_name\n\t\tFROM \n\t\tbr_event_log as log, br_contents as cont,br_contents_directory as dir, mdl_user as muser\n\t\twhere \n\t\tcont.parent_id = dir.directory_id and cont.contents_id = log.contents_id and dir.name = '1081_創意學習_楊鎮華教師'\n\t\tand substring_index(log.user_id, '@', 1) = muser.id\n\t) as layer1\n\tgroup by username,time\n) as find_max\n\nGROUP BY time\n)as table1\nINNER JOIN (SELECT time,username,\n\tcount(if(c_name = 'c_file',1,null))as class_A,\n\tcount(if(c_name = 'c_bookmark',1,null))as class_B,\n\tcount(if(c_name = 'c_maker',1,null))as class_C,\n\tcount(if(c_name = 'c_memo',1,null))as class_D,\n\tcount(if(c_name = 'c_surfing',1,null))as class_E,\n\tcount(if(c_name = 'c_other',1,null))as class_F\n\tFROM\n    (\n\t\tSELECT  STR_TO_DATE(CONCAT(DATE_FORMAT(log.operation_date,'%Y%u'), 'Sunday'), '%X %V %W') as time,username,\n\t\t(CASE operation_name WHEN 'OPEN' THEN 'c_file' WHEN 'CLOSE' THEN 'c_file' \n\t\t\t\t\t\tWHEN 'ADD BOOKMARK' THEN 'c_bookmark' WHEN 'DELETE BOOKMARK' THEN 'c_bookmark' \n\t\t\t\t\t\tWHEN 'ADD MARKER' THEN 'c_maker' WHEN 'DELETE MARKER' THEN 'c_maker'\n\t\t\t\t\t\tWHEN 'ADD MEMO' THEN 'c_memo' WHEN 'ADD_HW_MEMO' THEN 'c_memo' WHEN 'DELETE_MEMO' THEN 'c_memo' WHEN 'CHANGE MEMO' THEN 'c_memo' WHEN 'CLEAR_HW_MEMO' THEN 'c_memo' WHEN 'UNDO_HW_MEMO' THEN 'c_memo'\n\t\t\t\t\t\tWHEN 'NEXT' THEN 'c_surfing' WHEN 'PREV' THEN 'c_surfing' WHEN 'PAGE_JUMP' THEN 'c_surfing' WHEN 'BOOKMARK_JUMP' THEN 'c_surfing'\n\t\t\t\t\t\tWHEN 'SEARCH'THEN 'c_other' WHEN'SEARCH_JUMP'THEN 'c_other' WHEN'OPEN_RECOMMENDATION'THEN 'c_other' WHEN'REGIST CONTENTS'THEN 'c_other' WHEN'CLOSE_RECOMMENDATION'THEN 'c_other' WHEN'ADD_RECOMMENDATION'THEN 'c_other' WHEN'QUIZ_ANSWER_CORRECT'THEN 'c_other' WHEN'QUIZ_ANSWER'THEN 'c_other' WHEN'CLICK_RECOMMENDATION'THEN 'c_other' WHEN'GETIT'THEN 'c_other' WHEN'LINK_CLICK'THEN 'c_other' WHEN'NOTGETIT'THEN 'c_other' WHEN'MEMO_JUMP'THEN 'c_other' WHEN'DELETE_RECOMMENDATION' THEN 'c_other'\n\t\t\t\t\t\tend) as c_name\n\t\tFROM \n\t\tbr_event_log as log, br_contents as cont,br_contents_directory as dir, mdl_user as muser\n\t\twhere \n\t\tcont.parent_id = dir.directory_id and cont.contents_id = log.contents_id and dir.name = '1081_創意學習_楊鎮華教師'\n\t\tand substring_index(log.user_id, '@', 1) = muser.id\n\t) as layer2\n\tgroup by username,time\n) as table2\non table1.time = table2.time\n) as final_table\nwhere username = '$Student'\ngroup by time,username\norder by time",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "parent_id"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "br_contents",
+          "timeColumn": "created",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        },
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT time ,  avg((class_A/max_a*100*0.1) + (class_B/max_b*100*0.2) + (class_C/max_c*100*0.2) +(class_D/max_d*100*0.2) + (class_E/max_e*100*0.2) + (class_F/max_f*100*0.1))as average\nfrom(\nSELECT table2.time,username,class_A,class_B,class_C,class_D,class_E,class_F,max_a,max_b,max_c,max_d,max_e,max_f\nfrom(\nSELECT time , max(class_A) as max_a,max(class_B) as max_b , max(class_C) as max_c ,max(class_D) as max_d ,max(class_E) as max_e , max(class_F) as max_f\nFROM\n(\n\tSELECT time,username,\n\tcount(if(c_name = 'c_file',1,null))as class_A,\n\tcount(if(c_name = 'c_bookmark',1,null))as class_B,\n\tcount(if(c_name = 'c_maker',1,null))as class_C,\n\tcount(if(c_name = 'c_memo',1,null))as class_D,\n\tcount(if(c_name = 'c_surfing',1,null))as class_E,\n\tcount(if(c_name = 'c_other',1,null))as class_F\n\tFROM\n    (\n\t\tSELECT  STR_TO_DATE(CONCAT(DATE_FORMAT(log.operation_date,'%Y%u'), 'Sunday'), '%X %V %W') as time,username,\n\t\t(CASE operation_name WHEN 'OPEN' THEN 'c_file' WHEN 'CLOSE' THEN 'c_file' \n\t\t\t\t\t\tWHEN 'ADD BOOKMARK' THEN 'c_bookmark' WHEN 'DELETE BOOKMARK' THEN 'c_bookmark' \n\t\t\t\t\t\tWHEN 'ADD MARKER' THEN 'c_maker' WHEN 'DELETE MARKER' THEN 'c_maker'\n\t\t\t\t\t\tWHEN 'ADD MEMO' THEN 'c_memo' WHEN 'ADD_HW_MEMO' THEN 'c_memo' WHEN 'DELETE_MEMO' THEN 'c_memo' WHEN 'CHANGE MEMO' THEN 'c_memo' WHEN 'CLEAR_HW_MEMO' THEN 'c_memo' WHEN 'UNDO_HW_MEMO' THEN 'c_memo'\n\t\t\t\t\t\tWHEN 'NEXT' THEN 'c_surfing' WHEN 'PREV' THEN 'c_surfing' WHEN 'PAGE_JUMP' THEN 'c_surfing' WHEN 'BOOKMARK_JUMP' THEN 'c_surfing'\n\t\t\t\t\t\tWHEN 'SEARCH'THEN 'c_other' WHEN'SEARCH_JUMP'THEN 'c_other' WHEN'OPEN_RECOMMENDATION'THEN 'c_other' WHEN'REGIST CONTENTS'THEN 'c_other' WHEN'CLOSE_RECOMMENDATION'THEN 'c_other' WHEN'ADD_RECOMMENDATION'THEN 'c_other' WHEN'QUIZ_ANSWER_CORRECT'THEN 'c_other' WHEN'QUIZ_ANSWER'THEN 'c_other' WHEN'CLICK_RECOMMENDATION'THEN 'c_other' WHEN'GETIT'THEN 'c_other' WHEN'LINK_CLICK'THEN 'c_other' WHEN'NOTGETIT'THEN 'c_other' WHEN'MEMO_JUMP'THEN 'c_other' WHEN'DELETE_RECOMMENDATION' THEN 'c_other'\n\t\t\t\t\t\tend) as c_name\n\t\tFROM \n\t\tbr_event_log as log, br_contents as cont,br_contents_directory as dir, mdl_user as muser\n\t\twhere \n\t\tcont.parent_id = dir.directory_id and cont.contents_id = log.contents_id and dir.name = '1081_創意學習_楊鎮華教師'\n\t\tand substring_index(log.user_id, '@', 1) = muser.id \n\t) as layer1\n\tgroup by username,time\n) as find_max\n\nGROUP BY time\n)as table1\nINNER JOIN (SELECT time,username,\n\tcount(if(c_name = 'c_file',1,null))as class_A,\n\tcount(if(c_name = 'c_bookmark',1,null))as class_B,\n\tcount(if(c_name = 'c_maker',1,null))as class_C,\n\tcount(if(c_name = 'c_memo',1,null))as class_D,\n\tcount(if(c_name = 'c_surfing',1,null))as class_E,\n\tcount(if(c_name = 'c_other',1,null))as class_F\n\tFROM\n    (\n\t\tSELECT  STR_TO_DATE(CONCAT(DATE_FORMAT(log.operation_date,'%Y%u'), 'Sunday'), '%X %V %W') as time,username,\n\t\t(CASE operation_name WHEN 'OPEN' THEN 'c_file' WHEN 'CLOSE' THEN 'c_file' \n\t\t\t\t\t\tWHEN 'ADD BOOKMARK' THEN 'c_bookmark' WHEN 'DELETE BOOKMARK' THEN 'c_bookmark' \n\t\t\t\t\t\tWHEN 'ADD MARKER' THEN 'c_maker' WHEN 'DELETE MARKER' THEN 'c_maker'\n\t\t\t\t\t\tWHEN 'ADD MEMO' THEN 'c_memo' WHEN 'ADD_HW_MEMO' THEN 'c_memo' WHEN 'DELETE_MEMO' THEN 'c_memo' WHEN 'CHANGE MEMO' THEN 'c_memo' WHEN 'CLEAR_HW_MEMO' THEN 'c_memo' WHEN 'UNDO_HW_MEMO' THEN 'c_memo'\n\t\t\t\t\t\tWHEN 'NEXT' THEN 'c_surfing' WHEN 'PREV' THEN 'c_surfing' WHEN 'PAGE_JUMP' THEN 'c_surfing' WHEN 'BOOKMARK_JUMP' THEN 'c_surfing'\n\t\t\t\t\t\tWHEN 'SEARCH'THEN 'c_other' WHEN'SEARCH_JUMP'THEN 'c_other' WHEN'OPEN_RECOMMENDATION'THEN 'c_other' WHEN'REGIST CONTENTS'THEN 'c_other' WHEN'CLOSE_RECOMMENDATION'THEN 'c_other' WHEN'ADD_RECOMMENDATION'THEN 'c_other' WHEN'QUIZ_ANSWER_CORRECT'THEN 'c_other' WHEN'QUIZ_ANSWER'THEN 'c_other' WHEN'CLICK_RECOMMENDATION'THEN 'c_other' WHEN'GETIT'THEN 'c_other' WHEN'LINK_CLICK'THEN 'c_other' WHEN'NOTGETIT'THEN 'c_other' WHEN'MEMO_JUMP'THEN 'c_other' WHEN'DELETE_RECOMMENDATION' THEN 'c_other'\n\t\t\t\t\t\tend) as c_name\n\t\tFROM \n\t\tbr_event_log as log, br_contents as cont,br_contents_directory as dir, mdl_user as muser\n\t\twhere \n\t\tcont.parent_id = dir.directory_id and cont.contents_id = log.contents_id and dir.name = '1081_創意學習_楊鎮華教師'\n\t\tand substring_index(log.user_id, '@', 1) = muser.id \n\t) as layer2\n\tgroup by username,time\n) as table2\non table1.time = table2.time\n) as final_table\ngroup by time\norder by time",
+          "refId": "B",
+          "select": [
+            [
+              {
+                "params": [
+                  "parent_id"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "br_contents",
+          "timeColumn": "created",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": " Count of engagement(Log Score)(驗證用)",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "collapsed": false,
+      "datasource": "${DS_130MYSQL}",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 8
+      },
+      "id": 30,
+      "panels": [],
+      "repeat": null,
+      "title": "Weekly Report",
+      "type": "row"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${DS_130MYSQL}",
+      "decimals": null,
+      "fill": 0,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 9
+      },
+      "id": 42,
+      "legend": {
+        "alignAsTable": true,
+        "avg": false,
+        "current": false,
+        "hideEmpty": false,
+        "hideZero": false,
+        "max": false,
+        "min": false,
+        "rightSide": true,
+        "show": true,
+        "sideWidth": 200,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null as zero",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 2,
+      "points": true,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT STR_TO_DATE(CONCAT(weeks, 'Thursday'), '%X %V %W') as time, max(IF(username='$Student', c_file, 0))/max(c_file)*100*0.1 + max(IF(username='$Student', c_bookmark, 0))/max(c_bookmark)*100*0.2 + max(IF(username='$Student', c_maker, 0))/max(c_maker)*100*0.2 + max(IF(username='$Student', c_memo, 0))/max(c_memo)*100*0.2 + max(IF(username='$Student', c_surfing, 0))/max(c_surfing)*100*0.2 + max(IF(username='$Student', c_other, 0))/max(c_other)*100*0.1 as '$Student'\nFROM(SELECT DATE_FORMAT(log.operation_date,'%Y%u') weeks,\n\t\t   muser.username as username,\n\t\t   COUNT(IF(log.operation_name='OPEN' or log.operation_name='CLOSE',1, NULL)) as c_file,\n\t\t   COUNT(IF(log.operation_name='ADD BOOKMARK' or log.operation_name='DELETE BOOKMARK',1, NULL)) as c_bookmark,\n\t\t   COUNT(IF(log.operation_name='ADD MARKER' or log.operation_name='DELETE MARKER',1, NULL)) as c_maker,\n\t\t   COUNT(IF(log.operation_name='ADD MEMO' or log.operation_name='ADD_HW_MEMO' or log.operation_name='DELETE_MEMO' or log.operation_name='CHANGE MEMO' or log.operation_name='CLEAR_HW_MEMO' or log.operation_name='UNDO_HW_MEMO',1, NULL)) as c_memo,\n\t\t   COUNT(IF(log.operation_name='NEXT' or log.operation_name='PREV' or log.operation_name='PAGE_JUMP' or log.operation_name='BOOKMARK_JUMP',1, NULL)) as c_surfing ,\n\t\t   COUNT(IF(log.operation_name='ADD_RECOMMENDATION' or log.operation_name='CLICK_RECOMMENDATION' or log.operation_name='CLOSE_RECOMMENDATION' or log.operation_name='DELETE_RECOMMENDATION' or log.operation_name='GETIT' or log.operation_name='LINK_CLICK' or log.operation_name='MEMO_JUMP' or log.operation_name='NOTGETIT' or log.operation_name='OPEN_RECOMMENDATION' or log.operation_name='SEARCH' or log.operation_name='SEARCH_JUMP' or log.operation_name='QUIZ_ANSWER_CORRECT',1, NULL)) as c_other\n\tFROM bookroll.br_event_log as log, bookroll.br_contents as cont, bookroll.br_contents_directory as dir, mdl_user as muser\n\tWHERE cont.parent_id = dir.directory_id and cont.contents_id = log.contents_id and dir.name = '$flask_test' and substring_index(log.user_id, '@', 1) = muser.id\n\tgroup by weeks, muser.username) a\ngroup by time\norder by time;",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "parent_id"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "br_contents",
+          "timeColumn": "created",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        },
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT STR_TO_DATE(CONCAT(tmp1.weeks, 'Thursday'), '%X %V %W') as time, avg(((c_file/MAX_c_file*100*0.1) + (c_bookmark/MAX_c_bookmark*100*0.2) + (c_maker/MAX_c_maker*100*0.2) +(c_memo/MAX_c_memo*100*0.2) + (c_surfing/MAX_c_surfing*100*0.2) + (c_other/MAX_c_other*100*0.1))) as Average\nFROM(SELECT weeks, max(c_file) as MAX_c_file, max(c_bookmark) as MAX_c_bookmark, max(c_maker) as MAX_c_maker, max(c_memo) as MAX_c_memo, max(c_surfing) as MAX_c_surfing, max(c_other) as MAX_c_other\n\tFROM(SELECT DATE_FORMAT(log.operation_date,'%Y%u') weeks,\n\t\t\t   muser.username,\n\t\t\t   COUNT(IF(log.operation_name='OPEN' or log.operation_name='CLOSE',1, NULL)) as c_file,\n\t\t\t   COUNT(IF(log.operation_name='ADD BOOKMARK' or log.operation_name='DELETE BOOKMARK',1, NULL)) as c_bookmark,\n\t\t\t   COUNT(IF(log.operation_name='ADD MARKER' or log.operation_name='DELETE MARKER',1, NULL)) as c_maker,\n\t\t\t   COUNT(IF(log.operation_name='ADD MEMO' or log.operation_name='ADD_HW_MEMO' or log.operation_name='DELETE_MEMO' or log.operation_name='CHANGE MEMO' or log.operation_name='CLEAR_HW_MEMO' or log.operation_name='UNDO_HW_MEMO',1, NULL)) as c_memo,\n\t\t\t   COUNT(IF(log.operation_name='NEXT' or log.operation_name='PREV' or log.operation_name='PAGE_JUMP' or log.operation_name='BOOKMARK_JUMP',1, NULL)) as c_surfing ,\n\t\t\t   COUNT(IF(log.operation_name='ADD_RECOMMENDATION' or log.operation_name='CLICK_RECOMMENDATION' or log.operation_name='CLOSE_RECOMMENDATION' or log.operation_name='DELETE_RECOMMENDATION' or log.operation_name='GETIT' or log.operation_name='LINK_CLICK' or log.operation_name='MEMO_JUMP' or log.operation_name='NOTGETIT' or log.operation_name='OPEN_RECOMMENDATION' or log.operation_name='SEARCH' or log.operation_name='SEARCH_JUMP' or log.operation_name='QUIZ_ANSWER_CORRECT',1, NULL)) as c_other\n\t\tFROM bookroll.br_event_log as log, bookroll.br_contents as cont, bookroll.br_contents_directory as dir, mdl_user as muser\n\t\tWHERE cont.parent_id = dir.directory_id and cont.contents_id = log.contents_id and dir.name = '$flask_test' and substring_index(log.user_id, '@', 1) = muser.id\n\t\tgroup by weeks, muser.username) a\n\tgroup by weeks) as tmp2, (SELECT DATE_FORMAT(log.operation_date,'%Y%u') weeks,\n\t\t\t   muser.username,\n\t\t\t   COUNT(IF(log.operation_name='OPEN' or log.operation_name='CLOSE',1, NULL)) as c_file,\n\t\t\t   COUNT(IF(log.operation_name='ADD BOOKMARK' or log.operation_name='DELETE BOOKMARK',1, NULL)) as c_bookmark,\n\t\t\t   COUNT(IF(log.operation_name='ADD MARKER' or log.operation_name='DELETE MARKER',1, NULL)) as c_maker,\n\t\t\t   COUNT(IF(log.operation_name='ADD MEMO' or log.operation_name='ADD_HW_MEMO' or log.operation_name='DELETE_MEMO' or log.operation_name='CHANGE MEMO' or log.operation_name='CLEAR_HW_MEMO' or log.operation_name='UNDO_HW_MEMO',1, NULL)) as c_memo,\n\t\t\t   COUNT(IF(log.operation_name='NEXT' or log.operation_name='PREV' or log.operation_name='PAGE_JUMP' or log.operation_name='BOOKMARK_JUMP',1, NULL)) as c_surfing ,\n\t\t\t   COUNT(IF(log.operation_name='ADD_RECOMMENDATION' or log.operation_name='CLICK_RECOMMENDATION' or log.operation_name='CLOSE_RECOMMENDATION' or log.operation_name='DELETE_RECOMMENDATION' or log.operation_name='GETIT' or log.operation_name='LINK_CLICK' or log.operation_name='MEMO_JUMP' or log.operation_name='NOTGETIT' or log.operation_name='OPEN_RECOMMENDATION' or log.operation_name='SEARCH' or log.operation_name='SEARCH_JUMP' or log.operation_name='QUIZ_ANSWER_CORRECT',1, NULL)) as c_other\n\t\tFROM bookroll.br_event_log as log, bookroll.br_contents as cont, bookroll.br_contents_directory as dir, mdl_user as muser\n\t\tWHERE cont.parent_id = dir.directory_id and cont.contents_id = log.contents_id and dir.name = '$flask_test' and substring_index(log.user_id, '@', 1) = muser.id\n\t\tgroup by weeks, muser.username) as tmp1\nWHERE tmp1.weeks = tmp2.weeks\ngroup by time\norder by time;",
+          "refId": "B",
+          "select": [
+            [
+              {
+                "params": [
+                  "parent_id"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "br_contents",
+          "timeColumn": "created",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": " Count of engagement(Log Score)",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": "",
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "cacheTimeout": null,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${DS_130MYSQL}",
+      "fill": 0,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 24,
+        "x": 0,
+        "y": 17
+      },
+      "id": 36,
+      "interval": "7d",
+      "legend": {
+        "alignAsTable": true,
+        "avg": false,
+        "current": false,
+        "hideEmpty": false,
+        "hideZero": false,
+        "max": false,
+        "min": false,
+        "rightSide": true,
+        "show": true,
+        "sideWidth": 200,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null as zero",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 2,
+      "points": true,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT \r\n  $__timeGroupAlias(log.operation_date,$__interval), \r\n  muser.username AS metric, \r\n  count(cont.parent_id)\r\nFROM \r\n  br_event_log as log, br_contents as cont,br_contents_directory as dir, mdl_user as muser\r\nwhere \r\n   log.operation_name in ($Feature) and cont.parent_id = dir.directory_id and cont.contents_id = log.contents_id and dir.name = '$flask_test'\r\n  and substring_index(log.user_id, '@', 1) = muser.id and log.contents_name IN ($contents_name) and muser.username = '$Student'\r\n\r\ngroup BY 1\r\nORDER BY Time ASC;",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "parent_id"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "br_contents",
+          "timeColumn": "created",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        },
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT \r\n  $__timeGroupAlias(log.operation_date,$__interval), \r\n  count(cont.parent_id) / count(DISTINCT log.user_id),\r\n  'Average' as metric\r\nFROM \r\n  br_event_log as log, br_contents as cont,br_contents_directory as dir, mdl_user as muser\r\nwhere \r\n  log.operation_name in ($Feature) and  cont.parent_id = dir.directory_id and cont.contents_id = log.contents_id and dir.name = '$flask_test'\r\n  and substring_index(log.user_id, '@', 1) = muser.id and log.contents_name IN ($contents_name) \r\n\r\ngroup BY 1\r\nORDER BY Time ASC;",
+          "refId": "B",
+          "select": [
+            [
+              {
+                "params": [
+                  "parent_id"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "br_contents",
+          "timeColumn": "created",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Count of Features by Student",
+      "tooltip": {
+        "shared": true,
+        "sort": 1,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": "",
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${DS_130MYSQL}",
+      "fill": 10,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 10,
+        "w": 24,
+        "x": 0,
+        "y": 26
+      },
+      "id": 40,
+      "interval": "7d",
+      "legend": {
+        "alignAsTable": true,
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "rightSide": true,
+        "show": true,
+        "sideWidth": 200,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 1,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": true,
+      "steppedLine": false,
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\r\n  $__timeGroupAlias(log.operation_date,$__interval),\r\n  'Ebook_File' as metric,\r\n  count(log.version) AS \"parent_id\"\r\nFROM br_event_log as log, br_contents as cont, br_contents_directory as dir, mdl_user as muser\r\nWHERE\r\n  $__timeFilter(log.operation_date) and cont.parent_id = dir.directory_id and cont.contents_id = log.contents_id and dir.name = '$flask_test'\r\n  and substring_index(log.user_id, '@', 1) = muser.id and log.contents_name IN ($contents_name) and muser.username = '$Student' \r\n  and log.operation_name IN ('OPEN' , 'CLOSE')\r\nGROUP BY 1\r\nORDER BY Time ASC;",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "parent_id"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "br_contents",
+          "timeColumn": "created",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        },
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\r\n  $__timeGroupAlias(log.operation_date,$__interval),\r\n  'Bookmark' as metric,\r\n  count(log.version) AS \"parent_id\"\r\nFROM br_event_log as log, br_contents as cont, br_contents_directory as dir, mdl_user as muser\r\nWHERE\r\n  $__timeFilter(log.operation_date) and cont.parent_id = dir.directory_id and cont.contents_id = log.contents_id and dir.name = '$flask_test'\r\n  and substring_index(log.user_id, '@', 1) = muser.id and log.contents_name IN ($contents_name) and muser.username = '$Student' \r\n  and log.operation_name IN ('ADD BOOKMARK' , 'DELETE BOOKMARK')\r\nGROUP BY 1\r\nORDER BY Time ASC;",
+          "refId": "B",
+          "select": [
+            [
+              {
+                "params": [
+                  "parent_id"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "br_contents",
+          "timeColumn": "created",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        },
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\r\n  $__timeGroupAlias(log.operation_date,$__interval),\r\n  'Marker' as metric,\r\n  count(log.version) AS \"parent_id\"\r\nFROM br_event_log as log, br_contents as cont, br_contents_directory as dir, mdl_user as muser\r\nWHERE\r\n  $__timeFilter(log.operation_date) and cont.parent_id = dir.directory_id and cont.contents_id = log.contents_id and dir.name = '$flask_test'\r\n  and substring_index(log.user_id, '@', 1) = muser.id and log.contents_name IN ($contents_name) and muser.username = '$Student' \r\n  and log.operation_name IN ('ADD MARKER' , 'DELETE MARKER')\r\nGROUP BY 1\r\nORDER BY Time ASC;",
+          "refId": "C",
+          "select": [
+            [
+              {
+                "params": [
+                  "parent_id"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "br_contents",
+          "timeColumn": "created",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        },
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\r\n  $__timeGroupAlias(log.operation_date,$__interval),\r\n  'Memo' as metric,\r\n  count(log.version) AS \"parent_id\"\r\nFROM br_event_log as log, br_contents as cont, br_contents_directory as dir, mdl_user as muser\r\nWHERE\r\n  $__timeFilter(log.operation_date) and cont.parent_id = dir.directory_id and cont.contents_id = log.contents_id and dir.name = '$flask_test'\r\n  and substring_index(log.user_id, '@', 1) = muser.id and log.contents_name IN ($contents_name) and muser.username = '$Student' \r\n  and log.operation_name IN ('ADD MEMO' , 'ADD_HW_MEMO' , 'DELETE_MEMO' , 'CHANGE MEMO' , 'CLEAR_HW_MEMO' , 'UNDO_HW_MEMO')\r\nGROUP BY 1\r\nORDER BY Time ASC;",
+          "refId": "D",
+          "select": [
+            [
+              {
+                "params": [
+                  "parent_id"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "br_contents",
+          "timeColumn": "created",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        },
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\r\n  $__timeGroupAlias(log.operation_date,$__interval),\r\n  'Ebook_Page' as metric,\r\n  count(log.version) AS \"parent_id\"\r\nFROM br_event_log as log, br_contents as cont, br_contents_directory as dir, mdl_user as muser\r\nWHERE\r\n  $__timeFilter(log.operation_date) and cont.parent_id = dir.directory_id and cont.contents_id = log.contents_id and dir.name = '$flask_test'\r\n  and substring_index(log.user_id, '@', 1) = muser.id and log.contents_name IN ($contents_name) and muser.username = '$Student' \r\n  and log.operation_name IN ('NEXT' , 'PREV' , 'PAGE_JUMP' , 'BOOKMARK_JUMP')\r\nGROUP BY 1\r\nORDER BY Time ASC;",
+          "refId": "E",
+          "select": [
+            [
+              {
+                "params": [
+                  "parent_id"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "br_contents",
+          "timeColumn": "created",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        },
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\r\n  $__timeGroupAlias(log.operation_date,$__interval),\r\n  'GETIT' as metric,\r\n  count(log.version) AS \"parent_id\"\r\nFROM br_event_log as log, br_contents as cont, br_contents_directory as dir, mdl_user as muser\r\nWHERE\r\n  $__timeFilter(log.operation_date) and cont.parent_id = dir.directory_id and cont.contents_id = log.contents_id and dir.name = '$flask_test'\r\n  and substring_index(log.user_id, '@', 1) = muser.id and log.contents_name IN ($contents_name) and muser.username = '$Student' \r\n  and log.operation_name = 'GETIT'\r\nGROUP BY 1\r\nORDER BY Time ASC;",
+          "refId": "F",
+          "select": [
+            [
+              {
+                "params": [
+                  "parent_id"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "br_contents",
+          "timeColumn": "created",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        },
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\r\n  $__timeGroupAlias(log.operation_date,$__interval),\r\n  'NOTGETIT' as metric,\r\n  count(log.version) AS \"parent_id\"\r\nFROM br_event_log as log, br_contents as cont, br_contents_directory as dir, mdl_user as muser\r\nWHERE\r\n  $__timeFilter(log.operation_date) and cont.parent_id = dir.directory_id and cont.contents_id = log.contents_id and dir.name = '$flask_test'\r\n  and substring_index(log.user_id, '@', 1) = muser.id and log.contents_name IN ($contents_name) and muser.username = '$Student' \r\n  and log.operation_name = 'NOTGETIT'\r\nGROUP BY 1\r\nORDER BY Time ASC;",
+          "refId": "G",
+          "select": [
+            [
+              {
+                "params": [
+                  "parent_id"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "br_contents",
+          "timeColumn": "created",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Count of Categories by Student",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${DS_130MYSQL}",
+      "decimals": null,
+      "fill": 10,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 10,
+        "w": 24,
+        "x": 0,
+        "y": 36
+      },
+      "id": 38,
+      "interval": "7d",
+      "legend": {
+        "alignAsTable": true,
+        "avg": false,
+        "current": false,
+        "hideEmpty": false,
+        "hideZero": false,
+        "max": false,
+        "min": false,
+        "rightSide": true,
+        "show": true,
+        "sideWidth": 200,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 0,
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 1,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": true,
+      "steppedLine": false,
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\r\n  $__timeGroupAlias(log.operation_date,$__interval),\r\n  log.operation_name AS metric,\r\n  count(log.version) AS \"parent_id\"\r\nFROM br_event_log as log, br_contents as cont, br_contents_directory as dir, mdl_user as muser\r\nWHERE\r\n  $__timeFilter(log.operation_date) and cont.parent_id = dir.directory_id and cont.contents_id = log.contents_id and dir.name = '$flask_test'\r\n  and substring_index(log.user_id, '@', 1) = muser.id and log.contents_name IN ($contents_name) and muser.username = '$Student'\r\nGROUP BY 1,2\r\nORDER BY Time ASC;",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "parent_id"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "br_contents",
+          "timeColumn": "created",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Count of Features by Student",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${DS_130MYSQL}",
+      "description": "讓您了解每一位學生在選定時間內各項Feature的Stack Plot ",
+      "fill": 10,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 10,
+        "w": 24,
+        "x": 0,
+        "y": 46
+      },
+      "id": 18,
+      "interval": "7d",
+      "legend": {
+        "alignAsTable": true,
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "rightSide": true,
+        "show": true,
+        "sideWidth": 200,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 0,
+      "links": [],
+      "maxPerRow": null,
+      "nullPointMode": "null as zero",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 1,
+      "points": false,
+      "renderer": "flot",
+      "repeat": null,
+      "repeatDirection": "h",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": true,
+      "steppedLine": false,
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  $__timeGroupAlias(log.operation_date,$__interval),\n  muser.username AS metric,\n  count(log.version) AS \"version\"\nFROM br_event_log as log, br_contents as cont, br_contents_directory as dir, mdl_user as muser\nWHERE\n  $__timeFilter(log.operation_date)  and operation_name IN ($Feature) and cont.parent_id = dir.directory_id and cont.contents_id = log.contents_id and dir.name = '$flask_test'\n  and substring_index(log.user_id, '@', 1) = muser.id and log.contents_name IN ($contents_name)\nGROUP BY 1,2\nORDER BY Time ASC;",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "parent_id"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "br_1081_cl",
+          "timeColumn": "operation_date",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Stack Plot by All Student",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "cards": {
+        "cardPadding": null,
+        "cardRound": null
+      },
+      "color": {
+        "cardColor": "#F2495C",
+        "colorScale": "sqrt",
+        "colorScheme": "interpolateRdYlGn",
+        "exponent": 0.5,
+        "mode": "spectrum"
+      },
+      "dataFormat": "tsbuckets",
+      "datasource": "${DS_130MYSQL}",
+      "description": "分析學生每周之Heatmap",
+      "gridPos": {
+        "h": 27,
+        "w": 24,
+        "x": 0,
+        "y": 56
+      },
+      "heatmap": {},
+      "hideTimeOverride": false,
+      "hideZeroBuckets": false,
+      "highlightCards": true,
+      "id": 20,
+      "interval": "7d",
+      "legend": {
+        "show": true
+      },
+      "options": {},
+      "reverseYBuckets": false,
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [
+            {
+              "params": [
+                "$__interval",
+                "none"
+              ],
+              "type": "time"
+            }
+          ],
+          "metricColumn": "user_id",
+          "rawQuery": true,
+          "rawSql": "SELECT \nmuser.username AS metric, \n$__timeGroupAlias(log.operation_date,$__interval), \ncount(cont.parent_id) \nFROM br_event_log as log, br_contents as cont,br_contents_directory as dir, mdl_user as muser\nwhere log.operation_name in ($Feature) and  cont.parent_id = dir.directory_id and cont.contents_id = log.contents_id and dir.name = '$flask_test'\nand substring_index(log.user_id, '@', 1) = muser.id and log.contents_name IN ($contents_name)\n\ngroup BY 1,2;",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "parent_id"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "count"
+                ],
+                "type": "aggregate"
+              }
+            ]
+          ],
+          "table": "br_1081_cl",
+          "timeColumn": "operation_date",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Heatmap by Week",
+      "tooltip": {
+        "show": true,
+        "showHistogram": false
+      },
+      "type": "heatmap",
+      "xAxis": {
+        "show": true
+      },
+      "xBucketNumber": null,
+      "xBucketSize": null,
+      "yAxis": {
+        "decimals": null,
+        "format": "none",
+        "logBase": 1,
+        "max": null,
+        "min": null,
+        "show": true,
+        "splitFactor": null
+      },
+      "yBucketBound": "middle",
+      "yBucketNumber": null,
+      "yBucketSize": null
+    },
+    {
+      "aliasColors": {},
+      "bars": true,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${DS_130MYSQL}",
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 19,
+        "w": 12,
+        "x": 0,
+        "y": 83
+      },
+      "id": 16,
+      "legend": {
+        "alignAsTable": true,
+        "avg": false,
+        "current": true,
+        "max": false,
+        "min": false,
+        "rightSide": true,
+        "show": true,
+        "sort": "current",
+        "sortDesc": true,
+        "total": false,
+        "values": true
+      },
+      "lines": false,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  log.operation_date as 'time',\n  muser.username AS metric,\n  count(cont.parent_id) AS \"parent_id\"\nFROM br_event_log as log, br_contents as cont, br_contents_directory as dir, mdl_user as muser\nWHERE\n  $__timeFilter(operation_date) and operation_name in ($Feature) and cont.parent_id = dir.directory_id and cont.contents_id = log.contents_id and dir.name = '$flask_test'\n  and substring_index(log.user_id, '@', 1) = muser.id and log.contents_name IN ($contents_name)\nGROUP BY log.user_id\nORDER BY $__timeGroup(operation_date,$__interval)",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "parent_id"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "br_1081_cl",
+          "timeColumn": "operation_date",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "學生動作統計",
+      "tooltip": {
+        "shared": false,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "series",
+        "name": null,
+        "show": false,
+        "values": [
+          "total"
+        ]
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "breakPoint": "50%",
+      "cacheTimeout": null,
+      "combine": {
+        "label": "Others",
+        "threshold": 0
+      },
+      "datasource": "${DS_130MYSQL}",
+      "decimals": null,
+      "fontSize": "80%",
+      "format": "short",
+      "gridPos": {
+        "h": 19,
+        "w": 12,
+        "x": 12,
+        "y": 83
+      },
+      "id": 22,
+      "interval": null,
+      "legend": {
+        "header": "",
+        "percentage": true,
+        "show": true,
+        "sideWidth": null,
+        "sort": "current",
+        "sortDesc": true,
+        "values": true
+      },
+      "legendType": "Right side",
+      "links": [],
+      "maxDataPoints": 3,
+      "nullPointMode": "connected",
+      "options": {},
+      "pieType": "pie",
+      "strokeWidth": 1,
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  log.operation_date as 'time',\n  muser.username AS metric,\n  count(cont.parent_id) AS \"parent_id\"\nFROM br_event_log as log, br_contents as cont, br_contents_directory as dir, mdl_user as muser\nWHERE\n  $__timeFilter(operation_date) and operation_name in ($Feature) and cont.parent_id = dir.directory_id and cont.contents_id = log.contents_id and dir.name = '$flask_test'\n  and substring_index(log.user_id, '@', 1) = muser.id and log.contents_name IN ($contents_name)\n  \nGROUP BY log.user_id\nORDER BY $__timeGroup(operation_date,$__interval)",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "parent_id"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "br_1081_cl",
+          "timeColumn": "operation_date",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Pie Chart",
+      "type": "grafana-piechart-panel",
+      "valueName": "current"
+    },
+    {
+      "content": "# 圖表許願區\n***\n>有任何圖表的需求或問題請寄信至   聯絡信箱： bookrolltaiwan@gmail.com \n\n>估過後可能新增功能\n\n\n",
+      "datasource": "${DS_130MYSQL}",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 102
+      },
+      "id": 34,
+      "mode": "markdown",
+      "options": {},
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "",
+      "transparent": true,
+      "type": "text"
+    },
+    {
+      "collapsed": false,
+      "datasource": "${DS_130MYSQL}",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 110
+      },
+      "id": 33,
+      "panels": [],
+      "title": "聯絡資訊",
+      "type": "row"
+    }
+  ],
+  "refresh": "1m",
+  "schemaVersion": 20,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "text": "1081_創意學習_楊鎮華教師",
+          "value": "1081_創意學習_楊鎮華教師"
+        },
+        "hide": 2,
+        "label": "flask_test",
+        "name": "flask_test",
+        "options": [
+          {
+            "selected": false,
+            "text": "",
+            "value": ""
+          }
+        ],
+        "query": "1081_創意學習_楊鎮華教師",
+        "skipUrlSync": false,
+        "type": "textbox"
+      },
+      {
+        "allValue": "",
+        "current": {},
+        "datasource": "${DS_130MYSQL}",
+        "definition": "SELECT distinct (log.operation_name)  FROM br_event_log as log, br_contents as cont, br_contents_directory as dir   WHERE cont.parent_id = dir.directory_id and cont.contents_id = log.contents_id and dir.name = '$flask_test';",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Feature",
+        "multi": false,
+        "name": "Feature",
+        "options": [],
+        "query": "SELECT distinct (log.operation_name)  FROM br_event_log as log, br_contents as cont, br_contents_directory as dir   WHERE cont.parent_id = dir.directory_id and cont.contents_id = log.contents_id and dir.name = '$flask_test';",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "${DS_130MYSQL}",
+        "definition": "SELECT distinct (cont.title)  FROM br_event_log as log, br_contents as cont, br_contents_directory as dir   WHERE (cont.del_flag = 0) and cont.parent_id = dir.directory_id and cont.contents_id = log.contents_id and dir.name = '$flask_test';",
+        "hide": 0,
+        "includeAll": true,
+        "label": "contents_name",
+        "multi": true,
+        "name": "contents_name",
+        "options": [],
+        "query": "SELECT distinct (cont.title)  FROM br_event_log as log, br_contents as cont, br_contents_directory as dir   WHERE (cont.del_flag = 0) and cont.parent_id = dir.directory_id and cont.contents_id = log.contents_id and dir.name = '$flask_test';",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "${DS_130MYSQL}",
+        "definition": "SELECT  muser.username AS metric FROM br_event_log as log, br_contents as cont,br_contents_directory as dir, mdl_user as muser where cont.parent_id = dir.directory_id and cont.contents_id = log.contents_id and dir.name = '$flask_test' and substring_index(log.user_id, '@', 1) = muser.id ",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Student",
+        "multi": false,
+        "name": "Student",
+        "options": [],
+        "query": "SELECT  muser.username AS metric FROM br_event_log as log, br_contents as cont,br_contents_directory as dir, mdl_user as muser where cont.parent_id = dir.directory_id and cont.contents_id = log.contents_id and dir.name = '$flask_test' and substring_index(log.user_id, '@', 1) = muser.id ",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      }
+    ]
+  },
+  "time": {
+    "from": "now-180d",
+    "to": "now+8h"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ]
+  },
+  "timezone": "utc",
+  "title": "Weekly Report",
+  "uid": "ymgPI-1Wz0",
+  "version": 49
+}
