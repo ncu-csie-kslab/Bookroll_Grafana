@@ -8,8 +8,10 @@ Moodle        | 帳號單一登入系統   |
 Bookroll      | 電子書平台        |  
 MySQL         | Bookroll資料庫    | 
 
+
 **二. 系統流程圖**
 ![image](https://github.com/CH-KANG/Grafana/blob/master/flow_chart.png)
+
 
 **三. 安裝前需求**
 * 系統為Linux / Windows皆可
@@ -30,3 +32,6 @@ MySQL         | Bookroll資料庫    |
   * 可選擇Linux, Windows, Mac, Docker等安裝方式與系統
   * 請參考官方文件
     https://grafana.com/grafana/download?platform=linux
+
+**四. Grafana配置**
+* MySQL 
