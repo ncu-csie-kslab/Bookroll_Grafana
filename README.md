@@ -96,6 +96,29 @@ MySQL         | Bookroll資料庫    |
   
   ![image](https://github.com/CH-KANG/Grafana/blob/master/Pic/importjson.PNG)
   
-  * 匯入完成後開啟，選擇share dashborad，並記錄下此串網址
+  * 匯入完成後開啟，選擇share dashborad，並記錄下此串網址 註1*
   
   ![image](https://github.com/CH-KANG/Grafana/blob/master/Pic/link.PNG)
+  
+* Step5.修改python檔案
+  * 請下載或Clone
+    
+    https://github.com/CH-KANG/Grafana/blob/master/Weekly%20Report-1583397606381.json
+    
+  * 打開python檔案(以為例)
+  
+    請修改以下部分
+
+   ```python
+   key = '12345678-8137-2FF2-ABCD'  #請修改成自訂的密碼(16進位)，並符合長度 (客戶密鑰)
+   the_secret = 'sd54f65sd65f6sde'  #請修改成自訂的密碼，並符合長度 (共享的密鑰)
+   ```  
+
+   ```python
+   def test():
+       tool_provider = FlaskToolProvider.from_flask_request(request=request)
+       temp = tool_provider.launch_params.__dict__['_params']['context_label']
+       return redirect('.......&var-flask_test=' + temp+'&refresh=1m') 
+       #請將註1* 的網址複製到 '.......&var-flask_test=' 取代內容
+       #並將&var-flask_test=之後的字元都去除
+   ```  
