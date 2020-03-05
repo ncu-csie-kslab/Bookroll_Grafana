@@ -64,10 +64,13 @@ MySQL         | Bookroll資料庫    |
     
 * Step3.連接資料庫
   * 點選 Configuration    
+  
   ![image](https://github.com/CH-KANG/Grafana/blob/master/Pic/Configuration.PNG)
   * 點選 Add data source
+  
   ![image](https://github.com/CH-KANG/Grafana/blob/master/Pic/Add%20data%20source.PNG)
   * 點選 SQL - MySQL
+  
   ![image](https://github.com/CH-KANG/Grafana/blob/master/Pic/SQL.PNG)
   
 * Step4.匯入Panel面板
